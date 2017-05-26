@@ -1,0 +1,19 @@
+version: '2'
+services:
+  dali:
+    image: dali-server
+    ports:
+        - 8085:8085
+    links:
+        - mongo
+    entrypoint:
+        - ./dali-server
+        - --database-ip=mongo
+  mongo:
+    image: dali-mongo
+    ports:
+        - 27017:27017
+    volumes:
+        - /tmp:/data
+    
+

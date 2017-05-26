@@ -1,0 +1,6 @@
+# dev environment files
+.DS_Store
+.idea
+.vscode
+
+

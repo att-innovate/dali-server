@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+ <head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+
+<script>
+function getId() {
+    var urlParamString = location.search.split("id=");
+    if (urlParamString.length <= 1)
+        return "";
+    else {
+        return urlParamString[1];
+    }
+}
+function requestImage(id) {
+    var url = "http://" + location.hostname + ":8085/mark/" + id;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+            if (request.status === 202) {
+                console.log(request.responseText);
+                var image = JSON.parse(request.responseText);
+		 document.getElementById("myImage").src = image.Content + ".jpg"
+            } else {
+                alert("Communication Error");
+            }
+        }
+    };
+    request.open("GET", url , true);
+    request.send();
+}
+function loadImage() {
+    var id = getId();
+    console.log(id);
+    var image = requestImage(id)
+}
+</script>
+</head>
+
+ <body onload="loadImage()">
+    <center><img id="myImage" src="" alt=image style="width:300px;height:300px;"></center>
+</html>
